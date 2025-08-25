@@ -16,8 +16,10 @@
 
 #include QMK_KEYBOARD_H
 
-#define L_F(f) (QK_LCTL | QK_LSFT | (KC_F##f))
-#define R_F(f) (QK_RCTL | QK_RSFT | (KC_F##f))
+#define LSF(f) (QK_LSFT | (KC_F##f))
+#define RSF(f) (QK_RSFT | (KC_F##f))
+#define LCF(f) (QK_LCTL | (KC_F##f))
+#define RCF(f) (QK_RCTL | (KC_F##f))
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
@@ -49,11 +51,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [1] = LAYOUT_fullsize_extended_iso(
         QK_BOOT,          KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  KC_F21,  KC_F22,  KC_F23,  KC_F24,     _______, _______, KC_SLEP,    _______, RM_TOGG, RM_VALD, RM_VALU,
 
-     MEH(KC_GRV),XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PRIR,    XXXXXXX, XXXXXXX, KC_MPRV,    _______, RM_PREV, RM_NEXT, RM_SPDD,
-        _______, XXXXXXX, XXXXXXX, R_F(13), R_F(18), XXXXXXX, XXXXXXX, R_F(14), L_F(15), KC_MAIL, R_F(17), XXXXXXX, XXXXXXX,             KC_PWR,  XXXXXXX, KC_MNXT,    XXXXXXX, XXXXXXX, XXXXXXX, RM_SPDU,
-        _______, XXXXXXX, R_F(15), XXXXXXX, L_F(16), L_F(18), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MSEL, XXXXXXX, XXXXXXX, _______,                                  XXXXXXX, XXXXXXX, XXXXXXX,
-        _______, XXXXXXX, L_F(13), XXXXXXX, L_F(17), R_F(16), KC_WHOM, L_F(14), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          _______,             RM_SATU,             L_F(24), R_F(24), XXXXXXX, XXXXXXX,
-        _______, GU_TOGG,  _______,                           KC_MPLY,                            _______, _______, _______, _______,    RM_HUED, RM_SATD, RM_HUEU,    L_F(23),          R_F(23)
+        RCF(21), LSF(22), RSF(22), LCF(22), RCF(22), LSF(23), RSF(23), LCF(23), RCF(23), LSF(24), RSF(24), LCF(24), RCF(24), _______,    XXXXXXX, XXXXXXX, KC_MPRV,    _______, XXXXXXX, XXXXXXX, RM_SPDD,
+        XXXXXXX, LSF(13), RSF(13), LCF(13), RCF(13), LSF(14), RSF(14), LCF(14), RCF(14), LSF(15), RSF(15), LCF(15), RCF(15),             KC_PWR,  XXXXXXX, KC_MNXT,    XXXXXXX, RM_SATU, RM_PREV, RM_SPDU,
+        _______, LSF(16), RSF(16), LCF(16), RCF(16), LSF(17), RSF(17), LCF(17), RCF(17), LSF(18), RSF(18), LCF(18), RCF(18), _______,                                  RM_HUED, KC_CNCL, RM_HUEU,
+        _______, LSF(19), RSF(19), LCF(19), RCF(19), LSF(20), RSF(20), LCF(20), RCF(20), LSF(21), RSF(21), LCF(21),          _______,             _______,             XXXXXXX, RM_SATD, RM_NEXT, XXXXXXX,
+        _______, GU_TOGG,  _______,                           KC_MPLY,                            _______, _______, _______, _______,    _______, _______, _______,    XXXXXXX,          XXXXXXX
     )
 };
 
@@ -71,7 +73,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   bool key_triggered = ! record->event.pressed;
 #endif
   switch (keycode) {
-    case KC_PRIOR:
+    case KC_CNCL:
       if (key_triggered) {rgb_matrix_reload_from_eeprom();}
       return false;
     case QK_RGB_MATRIX_ON:
@@ -124,6 +126,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case QK_UNDERGLOW_SPEED_DOWN:
       if (key_triggered) {rgb_matrix_decrease_speed_noeeprom();}
       return false;
+#ifdef RGB_MATRIX_SLEEP
+    case KC_PWR:
+      if (record->event.pressed) {rgb_matrix_disable_noeeprom();}
+#endif
   }
   return true;
 }
