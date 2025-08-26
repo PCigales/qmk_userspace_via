@@ -126,10 +126,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case QK_UNDERGLOW_SPEED_DOWN:
       if (key_triggered) {rgb_matrix_decrease_speed_noeeprom();}
       return false;
-#ifdef RGB_MATRIX_SLEEP
-    case KC_PWR:
-      if (record->event.pressed) {rgb_matrix_disable_noeeprom();}
-#endif
   }
   return true;
 }
