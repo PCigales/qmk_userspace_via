@@ -70,6 +70,7 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 void keyboard_post_init_user(void) {
   g_led_config.flags[20] = 4;
   g_led_config.flags[37] = 1;
+  g_led_config.flags[95] = 1;
 }
 #endif
 
