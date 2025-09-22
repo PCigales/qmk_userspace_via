@@ -18,20 +18,25 @@
 #define DYNAMIC_KEYMAP_LAYER_COUNT 2
 #define USB_DEFAULT_BUFFER_CAPACITY 2
 
-/* USB polling rate in milliseconds */
+// USB polling rate in milliseconds
 #define USB_POLLING_INTERVAL_MS 2
 
-/* Debug options */
+// Debug options
 #undef DEBUG_MATRIX_SCAN_RATE
 
-/* RGB default values */
+// WIN disabling LED
+#undef LED_WIN_LOCK_PIN
+#define LED_WIN_BLOCK_PIN B12
+
+// RGB default values
 #define RGB_MATRIX_DEFAULT_ON false
 #define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_SOLID_COLOR
 #define RGB_MATRIX_DEFAULT_HUE 31
 #define RGB_MATRIX_DEFAULT_SAT 33
 #define RGB_MATRIX_DEFAULT_VAL 160
+#define RGB_MATRIX_DEFAULT_SPD 65
 
-/* Code size saving */
+// Code size saving
 #define NO_ACTION_TAPPING
 #define NO_ACTION_ONESHOT
 #define LAYER_STATE_8BIT
